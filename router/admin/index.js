@@ -53,5 +53,44 @@ router.post('/config',function(req,res){
 
 })
 
+router.post('/user',function(req,res){
+    sql = "SELECT * FROM gl_user";
+    mysql.query(sql,function(err,userData){
+       if(err){
+            res.status(500).send({code:500,data:[],msg:'database error'});
+        }else if(userData.length == 0){ 
+            res.status(400).send({code:400,data:[],msg:'parameters error'});
+        }else{
+            res.send(JSON.stringify(userData));
+        } 
+
+
+    })
+
+})
+
+router.post('/user_modify',function(req,res){
+    var name = req.body.user_modify_name;
+    var password = common.md5(req.body.modify_user_password+common.MD5_SUFFIX);
+    var email = req.body.user_modify_email;
+    var time = new Date().toLocaleString();
+        if(password && email){
+            sql = "UPDATE gl_user SET password='"+password+"',email='"+email+"',time='"+time+"' WHERE username ='"+name+"'";
+            //sql_params = [password,email,time];
+            mysql.query(sql,function(err,result){
+                if(err){
+                    console.log(err);
+                }else{
+                    res.status(200).send({msg:"success"});
+                }
+            })
+
+        }else{
+            res.status(404).send({msg:"参数不正确"});
+        }
+
+})
+
+
 module.exports = router; 
 
