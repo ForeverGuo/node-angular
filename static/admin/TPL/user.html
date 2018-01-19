@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>系统配置</title>
+    <script type="text/javascript:;" src="assets/js/config.js"></script>
+</head>
+<body>  
+<div id="page-wrapper">
+    <div id="page-inner">
+        <div class="row">
+           <div class="col-md-12">
+            <h1 class="page-head-line">用户管理</h1>
+           </div>     
+        </div>  
+         <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading"></div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>用户名</th>
+                                        <th>密码</th>
+                                        <th>邮箱</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="user in users" class="success">
+                                        <td>{{user.id}}</td>
+                                        <td>{{user.username}}</td>
+                                        <td>{{user.password}}</td>
+                                        <td>{{user.email}}</td>
+                                        <td><a href="#/user_modify?username={{user.username}}" class="btn btn-success">编辑</a></td>
+                                        <td><span class="btn btn-danger">删除</span></td>
+                                    </tr>    
+                               </tbody>         
+                            </table>
+                        </div>
+                       <p style="text-align:right;"><span class="btn btn-success">增加</span></p>
+                    </div>
+                </div>
+            </div>
+            <!--row-->
+           </div>
+       <!--page-inner-->    
+       </div>
+<!--page-wrapper-->       
+</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv ="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="initial-scale=1.0,user-scalable=no" />
+  <title></title>
+</head>
+<body>
+  <div class="navbar navbar-inverse navbar-fixed-top ng-scope header">开始下单</div>
+  <div class="container" ng-controller="forth">
+      <h3>我要下单</h3>
+      <hr/>
+      <p>菜品编号：{{yidm}}</p>
+      <p>菜品名称：{{yname}}</p>
+      <p>菜品图片：<img ng-src="{{yimg}}" alt="" style="width:50%;"/></p>
+      <hr/>
+      <div class="form-group form-inline">
+          <label for="lx">联 系 电 话：</label>
+          <input type="text" class="form-control" id="lx" />
+      </div>
+      <div class="form-group form-inline">
+          <label for="lxr">联 系 人&nbsp;&nbsp;&nbsp;&nbsp;：</label>
+          <input type="text" class="form-control" id="lxr">
+      </div>
+      <p>付款方式：</p>
+      <br/>
+      <div ng-init="Switch=true;" class="Input">
+          <label for="">
+            <input type="checkbox" value="网银" ng-click="ding()">&nbsp;网银
+          </label>
+          <label>
+            <input type="checkbox" value="微信" ng-click="ding()">&nbsp;微信
+          </label>
+          <label>
+            <input type="checkbox" value="支付宝" ng-click="ding()">&nbsp;支付宝
+          </label>
+      </div>
+
+      <br/>
+      <a href="" class="btn btn-primary" ng-disabled="Switch">下单</a>
+      <a href="#/second" class="btn btn-danger">取消</a>
+      <hr/>
+      <div id="allmap" style="height:200px;width:100%;"></div>
+  </div>
+</body>
+<script type="text/javascript">
+var map = new BMap.Map("allmap");
+map.centerAndZoom(new BMap.Point(116.404,39.915),11);
+var local = new BMap.LocalSearch(map,{
+    renderOptions:{map:map,autoViewport:true}
+});
+local.searchNearby("美味","中心");
+
+</script>
+</html>
