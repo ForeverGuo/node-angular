@@ -32,7 +32,7 @@ function sub(){
                 success: function (response) {
                     console.log(response);
                     window.localStorage.setItem("key",username);
-                    window.location.replace('./admin');
+                    window.location.replace('./main.html');
                 },
                 error: function (response) {
                     if (JSON.parse(response.responseText).code == 500) {
