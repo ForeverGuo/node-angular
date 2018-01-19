@@ -3,36 +3,36 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>用户修改</title>
-    <script type="text/javascript:;" src="assets/js/config.js"></script>
+    <title>系统配置</title>
+    <script type="text/javascript:;" src="components/config.js"></script>
 </head>
 <body>  
 <div id="page-wrapper">
     <div id="page-inner">
         <div class="row">
            <div class="col-md-12">
-            <h1 class="page-head-line">用户修改</h1>
+            <h1 class="page-head-line">系统配置</h1>
            </div>     
         </div>  
          <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                 <div class="panel panel-info">
-                    <div class="panel-heading"></div>
+                    <div class="panel-heading">请输入一下配置</div>
                     <div class="panel-body">
-                     <form role="form" id="user_modify_form">
+                     <form role="form"  ng-repeat = "content in config_content" id="xt_form">
                            <div class="form-group">
-                                 <label>用户名</label>
-                                 <input class="form-control" type="text" placeholder="{{username}}"  id="user_modify_name" disabled  />
+                                 <label>系统名称</label>
+                                 <input class="form-control" type="text"  value="{{content.xt_name}}"  id="xt_name"  />
                            </div>
                            <div class="form-group">
-                                 <label>密码</label>
-                                 <input class="form-control" type="text"  id="user_modify_password" />
+                                 <label>系统级别</label>
+                                 <input class="form-control" type="text"  value="{{content.xt_range}}"  id="xt_rang" />
                            </div>
                            <div class="form-group">
-                                 <label>邮箱</label>
-                                 <input class="form-control" type="text"  id="user_modify_email" />
+                                 <label>系统颜色</label>
+                                 <input class="form-control" type="text"  value="{{content.xt_color}}"  id="xt_color" />
                            </div>
-                                 <span ng-click="user_modify()"  class="btn btn-info" id="user_modify_save" >保存</span>
+                                 <span ng-click="xt_save()"  class="btn btn-info" id="xt_save" >保存</span>
 
                      </form>
                     </div>

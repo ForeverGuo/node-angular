@@ -6,6 +6,8 @@ $("#xt_save").click(function(){
     xt_name = $("#xt_name").val();
     xt_rang = $("#xt_rang").val();
     xt_color = $("#xt_color").val();
+    console.log("test");
+    console.log(xt_name,xt_rang,xt_color);
     if (xt_name && xt_rang && xt_color) {
            $.ajax({
                   type: 'POST',
