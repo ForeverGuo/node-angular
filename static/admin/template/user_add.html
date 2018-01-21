@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>用户修改</title>
-    <script type="text/javascript:;" src="components/user_modify.js"></script>
+    <title>用户增加</title>
+    <script type="text/javascript:;" src="components/user_add.js"></script>
 </head>
 <body>  
 <div id="page-wrapper">
     <div id="page-inner">
         <div class="row">
            <div class="col-md-12">
-            <h1 class="page-head-line">用户修改</h1>
+            <h1 class="page-head-line">用户增加</h1>
            </div>     
         </div>  
          <div class="row">
@@ -19,16 +19,20 @@
                 <div class="panel panel-info">
                     <div class="panel-heading"></div>
                     <div class="panel-body">
-                     <form role="form" id="user_modify_form">
+                     <form role="form" id="user_add_form">
                            <div class="form-group">
                                  <label>用户名</label>
-                                 <input class="form-control" type="text" placeholder="{{username}}"  id="user_modify_name" disabled  />
+                                 <input class="form-control" type="text"   id="user_add_username"   />
                            </div>
+			   <div class="form-group">
+				<label>密码</label>
+			        <input class="form-control" type="password"   id="user_add_password" />
+			  </div>
                            <div class="form-group">
                                  <label>邮箱</label>
-                                 <input class="form-control" type="text"  id="user_modify_email" />
+                                 <input class="form-control" type="text"  id="user_add_email" />
                            </div>
-                                 <span ng-click="user_modify()"  class="btn btn-info" id="user_modify_save" >保存</span>
+                                 <span ng-click="user_add()"  class="btn btn-info" id="user_add_save">保存</span>
 
                      </form>
                     </div>

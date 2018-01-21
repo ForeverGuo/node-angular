@@ -25,7 +25,6 @@
                                     <tr>
                                         <th>#</th>
                                         <th>用户名</th>
-                                        <th>密码</th>
                                         <th>邮箱</th>
                                         <th></th>
                                         <th></th>
@@ -35,7 +34,6 @@
                                     <tr ng-repeat="user in users" class="success">
                                         <td>{{user.id}}</td>
                                         <td>{{user.username}}</td>
-                                        <td>{{user.password}}</td>
                                         <td>{{user.email}}</td>
                                         <td><a href="#/user_modify?username={{user.username}}" class="btn btn-success">编辑</a></td>
                                         <td><span class="btn btn-danger">删除</span></td>
@@ -43,7 +41,7 @@
                                </tbody>         
                             </table>
                         </div>
-                       <p style="text-align:right;"><span class="btn btn-success">增加</span></p>
+                       <p style="text-align:right;"><a href="#/user_add"  class="btn btn-success">增加</a></p>
                     </div>
                 </div>
             </div>

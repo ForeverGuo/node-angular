@@ -1,21 +1,21 @@
-app.user_modify = function($scope,$http,$window,$location){
-    $scope.username = $location.search().username;
-    $scope.user_modify = function(){
-             name = $location.search().username;  
-             email = $('#user_modify_email').val();
+app.user_add = function($scope,$http,$window,$location){
+    $scope.user_add = function(){
+             name = $('#user_add_username').val();  
+	     password = $('#user_add_password').val();
+             email = $('#user_add_email').val();
             console.log(name);
             $http({
                  method: "POST",
-                 url: "/user_modify",
+                 url: "/user_add",
                  data:{
-                        "user_modify_name":name,
-                        "user_modify_email":email
+                        "user_add_username":name,
+			"user_add_password":password,
+                        "user_add_email":email
                     }   
                 }).
                 success(function(data, status) {
                  //$scope.status = status;
-                 confirm("修改成功");
-				 $scope.users = data;
+                 confirm("添加成功");
 				 $location.url("/user");
                 }).
                 error(function(data, status) {

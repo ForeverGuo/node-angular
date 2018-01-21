@@ -13,6 +13,10 @@ var app=angular.module('myapp',['ng','ngRoute'])
       templateUrl:'template/user_modify.html',
       controller:'user_modify'
   })
+  .when('/user_add',{
+	  templateUrl:'template/user_add.html',
+	  controller:'user_add'
+  })
   .when('/expostor',{
       templateUrl:"template/expostor.html",
       controller:'expostor'
@@ -53,6 +57,15 @@ var app=angular.module('myapp',['ng','ngRoute'])
   .controller('user_modify',function($window,$scope,$http,$location){
        app.user_modify($scope,$http,$window,$location);
  })
+  .controller('user_add',function($window,$scope,$http,$location){
+	   app.user_add($scope,$http,$window,$location);
+ })
+
  .controller('expostor',function($window,$scope,$http,$location){
  
  })
+
+
+
+
+

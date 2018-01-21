@@ -37,9 +37,8 @@ router.post('/config',function(req,res){
     var xt_color = req.body.xt_color;
     var time = new Date().toLocaleString();
         if(xt_name && xt_rang && xt_color){
-            sql = "INSERT INTO xi_config (xt_id,xt_name,xt_range,xt_color,xt_time)values(?,?,?,?,?)";
-            sql_params = [null,xt_name,xt_rang,xt_color,time];
-            mysql.zsg(sql,sql_params,function(err,result){
+            sql = "UPDATE xi_config SET xt_name='"+xt_name+"',xt_range='"+xt_rang+"',xt_color='"+xt_color+"',xt_time='"+time+"'";
+            mysql.query(sql,function(err,result){
                 if(err){
                     console.log(err);
                 }else{
@@ -52,6 +51,21 @@ router.post('/config',function(req,res){
         }
 
 })
+
+router.post('/config/content',function(req,res){
+       sql = "SELECT * FROM xi_config";
+       mysql.query(sql,function(err,result){
+           if(err){
+                    console.log(err);
+           }else{
+                    res.status(200).send({msg:"success"});
+                }
+        
+	})
+
+})
+
+
 
 router.post('/user',function(req,res){
     sql = "SELECT * FROM gl_user";
@@ -71,11 +85,10 @@ router.post('/user',function(req,res){
 
 router.post('/user_modify',function(req,res){
     var name = req.body.user_modify_name;
-    var password = common.md5(req.body.modify_user_password+common.MD5_SUFFIX);
     var email = req.body.user_modify_email;
     var time = new Date().toLocaleString();
-        if(password && email){
-            sql = "UPDATE gl_user SET password='"+password+"',email='"+email+"',time='"+time+"' WHERE username ='"+name+"'";
+        if( email){
+            sql = "UPDATE gl_user SET email='"+email+"',time='"+time+"' WHERE username ='"+name+"'";
             //sql_params = [password,email,time];
             mysql.query(sql,function(err,result){
                 if(err){
@@ -90,6 +103,32 @@ router.post('/user_modify',function(req,res){
         }
 
 })
+
+router.post('/user_add',function(req,res){
+    var name = req.body.user_add_username;
+    var email = req.body.user_add_email;
+    var password = common.md5(req.body.user_add_password+common.MD5_SUFFIX);
+    console.log(password);
+    var time = new Date().toLocaleString();
+    if( name && password &&email){
+            sql = "INSERT INTO gl_user(id,username,password,email,time)VALUES(?,?,?,?,?)";
+            sql_params = [null,name,password,email,time];
+            mysql.zsg(sql,sql_params,function(err,result){
+                if(err){
+                    console.log(err);
+                }else{
+                    res.status(200).send({msg:"success"});
+                }
+            })
+
+        }else{
+            res.status(404).send({msg:"参数不正确"});
+		
+		}		
+})
+
+
+
 
 
 module.exports = router; 
