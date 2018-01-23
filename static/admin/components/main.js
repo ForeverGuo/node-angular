@@ -21,12 +21,22 @@ var app=angular.module('myapp',['ng','ngRoute'])
       templateUrl:"template/expostor.html",
       controller:'expostor'
   })
+  .when('/expostor_add',{
+      templateUrl:"template/expostor_add.html",
+      controller:"expostor_add"
+  
+  })
+  .when('/expostor_modify',{
+      templateUrl:"template/expostor_modify.html",
+      controller:"expostor_modify"
+ }) 
   .otherwise({
      redirectTo : '/config'
   })
 })
   .controller('mycontroller',function($scope,$http,$window,$location){
         pathUrl = $location.path();
+        beginUser($scope,$http,$window.localStorage.getItem("key"))
         //console.log(pathUrl);
         if($window.localStorage.getItem("key")===null){
             $window.location = "/admin";
@@ -40,9 +50,6 @@ var app=angular.module('myapp',['ng','ngRoute'])
         };
         $scope.logout = function(){
             $window.localStorage.removeItem("key");
-        }
-        $scope.userModify = function(){
-            console.log("demo");
         }
 
   })
@@ -62,10 +69,30 @@ var app=angular.module('myapp',['ng','ngRoute'])
  })
 
  .controller('expostor',function($window,$scope,$http,$location){
- 
+    app.expostor($scope,$http,$window,$location); 
  })
 
+ .controller('expostor_add',function($window,$scope,$http,$location){
+      app.expostor_add($scope,$http,$window,$location);
+})
+ .controller('expostor_modify',function($window,$scope,$http,$location){
+      app.expostor_modify($scope,$http,$window,$location);
+})
 
 
+
+function beginUser($scope,$http,name){
+    $http({
+        method:"POST",
+        url:"/expostor_modify",
+        data:{"username":name}
+    }). 
+    success(function(data,status){
+        $scope.beginUser = data;
+        //console.log(data);
+    }). 
+    error(function(data,status){
+    }); 
+}
 
 

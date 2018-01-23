@@ -7,6 +7,7 @@
   <script src="assets/js/jquery-1.10.2.js"></script>
   <!-- BOOTSTRAP SCRIPTS -->
   <script src="assets/js/bootstrap.js"></script>
+  <script src="assets/js/bootstrap-fileupload.js"></script>
   <!-- METISMENU SCRIPTS -->
   <script src="assets/js/angular.min.js"></script>
   <script src="assets/js/angular-route.min.js"></script>
@@ -17,6 +18,7 @@
   <link href="assets/css/bootstrap.css" rel="stylesheet" />
   <!-- FONTAWESOME STYLES-->
   <link href="assets/css/font-awesome.css" rel="stylesheet" />
+  <link href="assets/css/bootstrap-fileupload.min.css" rel="stylesheet" />
   <!--CUSTOM BASIC STYLES-->
   <link href="assets/css/basic.css" rel="stylesheet" />
   <!--CUSTOM MAIN STYLES-->
@@ -46,11 +48,11 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
                     <li>
-                        <div class="user-img-div">
-                            <img src="../assets/img/user.png" class="img-thumbnail" />
+                        <div class="user-img-div" ng-repeat="user in beginUser">
+                            <img ng-src="../upload/{{user.e_photo}}" class="img-thumbnail" />
 
                             <div class="inner-text">
-                                Jhon Deo Alex
+                                {{user.e_name}}
                             <br />
                                 <small>Last Login : 2 Weeks Ago </small>
                             </div>
@@ -61,7 +63,7 @@
                         <a  ng-click="setSelected('/config')" ng-class="{'active-menu':isSelected('/config')}" href="#/config"><i class="fa fa-dashboard "></i>系统配置</a>
                     </li>
                     <li>
-                        <a  ng-click="setSelected('/user');userModify()" ng-class="{'active-menu':isSelected('/user')}" href="#/user"><i class="fa fa-user"></i>用户管理</a>
+                        <a  ng-click="setSelected('/user')" ng-class="{'active-menu':isSelected('/user')}" href="#/user"><i class="fa fa-user"></i>用户管理</a>
                     </li>
                     <li>
                         <a  ng-click="setSelected('/expostor')" ng-class="{'active-menu':isSelected('/expostor')}" href="#/expostor"><i class="fa fa-users"></i>讲解员列表</a>

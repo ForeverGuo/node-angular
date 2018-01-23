@@ -1,6 +1,7 @@
       
 app.config = function($scope,$http,$location,$window){
-     $scope.next=function(){
+    xt_config($scope,$http); 
+    $scope.next=function(){
           $location.path('/config');
      }
     
@@ -8,7 +9,6 @@ app.config = function($scope,$http,$location,$window){
           xt_name = $("#xt_name").val();
           xt_rang = $("#xt_rang").val();
           xt_color = $("#xt_color").val();
-        // console.log(xt_name,xt_rang,xt_color);
         if (xt_name && xt_rang && xt_color) {
            $http({
                   method: 'POST',
@@ -36,17 +36,18 @@ app.config = function($scope,$http,$location,$window){
         }
  
      }
-     
-     $http({
+}
+
+function xt_config($scope,$http){
+   $http({
         method: "POST",
         url: "/config/content",
         data:{}
-      }). 
+      }).
       success(function(data, status) {
-        //$scope.status = status;
-        //console.log(data);
         $scope.config_content = data;
-      }). 
+      }).
       error(function(data, status) {
-     }); 
+     });  
+
 }

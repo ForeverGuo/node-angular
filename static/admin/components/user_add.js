@@ -1,9 +1,8 @@
 app.user_add = function($scope,$http,$window,$location){
     $scope.user_add = function(){
              name = $('#user_add_username').val();  
-	     password = $('#user_add_password').val();
+	         password = $('#user_add_password').val();
              email = $('#user_add_email').val();
-            console.log(name);
             $http({
                  method: "POST",
                  url: "/user_add",
@@ -19,9 +18,8 @@ app.user_add = function($scope,$http,$window,$location){
 				 $location.url("/user");
                 }).
                 error(function(data, status) {
-                //$scope.data = data || "Request failed";
-                //$scope.status = status;
-         }); 
+                                
+             }); 
        } 
 
 

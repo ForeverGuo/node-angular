@@ -1,6 +1,7 @@
-app.user_modify = function($scope,$http,$window,$location){
+app.expostor_modify = function($scope,$http,$window,$location){
     $scope.username = $location.search().username;
-    $scope.user_modify = function(){
+    expostor($scope,$http,$scope.username);
+    $scope.expostor_modify = function(){
          name = $location.search().username;  
          email = $('#user_modify_email').val();
         // console.log(name);
@@ -24,5 +25,19 @@ app.user_modify = function($scope,$http,$window,$location){
          }); 
        } 
 
-
 }
+
+function expostor($scope,$http,name){
+    $http({
+        method:"POST",
+        url:"/expostor_modify",
+        data:{"username":name}
+    }). 
+    success(function(data,status){
+        $scope.expostor = data;
+        console.log(data);
+    }). 
+    error(function(data,status){
+    }); 
+}
+

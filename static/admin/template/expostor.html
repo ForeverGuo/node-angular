@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>讲解员列表</title>
-    <script type="text/javascript:;" src="components/user.js"></script>
+    <script type="text/javascript:;" src="components/expostor.js"></script>
 </head>
 <body>  
 <div id="page-wrapper">
@@ -36,22 +36,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="user in users" class="success">
+                                    <tr ng-repeat="user in expostor" class="success">
                                         <td>{{user.id}}</td>
-                                        <td>{{user.username}}</td>
-                                        <td>{{user.password}}</td>
-                                        <td>{{user.email}}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><a href="#/user_modify?username={{user.username}}" class="btn btn-success">编辑</a></td>
+                                        <td>{{user.e_name}}</td>
+                                        <td>{{user.e_sex}}</td>
+                                        <td>{{user.e_tel}}</td>
+                                        <td>{{user.e_language}}</td>
+                                        <td>{{user.en_range}}</td>
+                                        <td>{{user.ew_range}}</td>
+                                        <td>{{user.e_servers}}</td>
+                                        <td>{{user.e_time}}</td>
+                                        <td><img style="width:50px;height:50px;border-radious:50%;" class="img-thumbnail" ng-src="../upload/{{user.e_photo}}" /></td>
+                                        <td><a href="#/expostor_modify?username={{user.e_name}}" class="btn btn-success">编辑</a></td>
                                         <td><span class="btn btn-danger">删除</span></td>
                                     </tr>    
                                </tbody>         
                             </table>
                         </div>
-                       <p style="text-align:right;"><span class="btn btn-success">增加</span></p>
+                       <p style="text-align:right;"><a href="#/expostor_add" class="btn btn-success">增加</a></p>
                     </div>
                 </div>
             </div>
@@ -63,3 +65,4 @@
 </div>
 </body>
 </html>
+

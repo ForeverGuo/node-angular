@@ -1,6 +1,6 @@
-app.user = function($scope,$http,$window,$location){
-     user($scope,$http);
-     $scope.user_del = function(name){
+app.expostor = function($scope,$http,$window,$location){
+     expostor($scope,$http);
+     $scope.expostor_del = function(name){
         $http({
             method:'POST',
             url:"/user_del",
@@ -19,14 +19,14 @@ app.user = function($scope,$http,$window,$location){
 
 }
 
-function user($scope,$http){
+function expostor($scope,$http){
     $http({
         method:"POST",
-        url:"/user",
+        url:"/expostor",
         data:{}
     }).
     success(function(data,status){
-        $scope.users = data;
+        $scope.expostor = data;
     }).
     error(function(data,status){
     });
