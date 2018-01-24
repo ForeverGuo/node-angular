@@ -3,13 +3,16 @@ app.user_add = function($scope,$http,$window,$location){
              name = $('#user_add_username').val();  
 	         password = $('#user_add_password').val();
              email = $('#user_add_email').val();
+             img = $('#user_add_img img').attr('src');
+      if(name && password && email && img){
             $http({
                  method: "POST",
                  url: "/user_add",
                  data:{
                         "user_add_username":name,
-			"user_add_password":password,
-                        "user_add_email":email
+			            "user_add_password":password,
+                        "user_add_email":email,
+                        "user_add_img":img
                     }   
                 }).
                 success(function(data, status) {
@@ -20,7 +23,9 @@ app.user_add = function($scope,$http,$window,$location){
                 error(function(data, status) {
                                 
              }); 
-       } 
-
+       }else{
+        confirm("请填写完全");
+    }
+  }  
 
 }

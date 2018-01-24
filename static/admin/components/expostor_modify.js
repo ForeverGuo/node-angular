@@ -30,12 +30,12 @@ app.expostor_modify = function($scope,$http,$window,$location){
 function expostor($scope,$http,name){
     $http({
         method:"POST",
-        url:"/expostor_modify",
+        url:"/expostor_modify_befor",
         data:{"username":name}
     }). 
     success(function(data,status){
         $scope.expostor = data;
-        console.log(data);
+        //console.log(data);
     }). 
     error(function(data,status){
     }); 

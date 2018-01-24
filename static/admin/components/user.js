@@ -8,7 +8,6 @@ app.user = function($scope,$http,$window,$location){
         }).
         success(function(data,status){
             confirm("删除成功！");
-            user_del($scope,$http);            
         }).
         error(function(data,status){
             confirm("删除失败！");
@@ -26,7 +25,12 @@ function user($scope,$http){
         data:{}
     }).
     success(function(data,status){
-        $scope.users = data;
+        if(data.msg == "parameters error" || data.msg == "database error"){
+            return ;
+        }else{
+            
+            $scope.users = data;
+        }
     }).
     error(function(data,status){
     });

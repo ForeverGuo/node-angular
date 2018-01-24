@@ -49,12 +49,12 @@
                 <ul class="nav" id="main-menu">
                     <li>
                         <div class="user-img-div" ng-repeat="user in beginUser">
-                            <img ng-src="../upload/{{user.e_photo}}" class="img-thumbnail" />
+                            <img ng-src="../upload/{{user.headImage}}" class="img-thumbnail" />
 
                             <div class="inner-text">
-                                {{user.e_name}}
+                                {{user.username}}
                             <br />
-                                <small>Last Login : 2 Weeks Ago </small>
+                                <small>Last Login : {{user.time}} </small>
                             </div>
                         </div>
 

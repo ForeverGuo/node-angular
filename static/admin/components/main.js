@@ -84,7 +84,7 @@ var app=angular.module('myapp',['ng','ngRoute'])
 function beginUser($scope,$http,name){
     $http({
         method:"POST",
-        url:"/expostor_modify",
+        url:"/beginUser",
         data:{"username":name}
     }). 
     success(function(data,status){

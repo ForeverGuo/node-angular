@@ -10,7 +10,6 @@ router.post('/login',function(req,res){
    console.log(password);
         if(username && password){
             mysql.query('SELECT * FROM gl_user WHERE username="'+username+'"',function (err,userData) {
-        console.log(userData);
                 if(err){
                     console.error(err);
                     res.status(500).send({code:500,data:[],msg:'database error'});
@@ -72,9 +71,26 @@ router.post('/user',function(req,res){
     sql = "SELECT * FROM gl_user";
     mysql.query(sql,function(err,userData){
        if(err){
-            res.status(500).send({code:500,data:[],msg:'database error'});
+            res.send({code:500,data:[],msg:'database error'});
         }else if(userData.length == 0){ 
-            res.status(400).send({code:400,data:[],msg:'parameters error'});
+            res.send({code:400,data:[],msg:'parameters error'});
+        }else{
+            res.send(JSON.stringify(userData));
+        } 
+
+
+    })
+
+})
+
+router.post('/user_modify_befor',function(req,res){
+    var name = req.body.username;
+    sql = "SELECT * FROM gl_user WHERE username ='"+name+"'";
+    mysql.query(sql,function(err,userData){
+       if(err){
+            res.send({code:500,data:[],msg:'database error'});
+        }else if(userData.length == 0){ 
+            res.send({code:400,data:[],msg:'parameters error'});
         }else{
             res.send(JSON.stringify(userData));
         } 
@@ -85,17 +101,28 @@ router.post('/user',function(req,res){
 })
 
 router.post('/user_modify',function(req,res){
+    var imgData = req.body.user_modify_img;
     var name = req.body.user_modify_name;
     var email = req.body.user_modify_email;
     var time = new Date().toLocaleString();
-        if( email){
-            sql = "UPDATE gl_user SET email='"+email+"',time='"+time+"' WHERE username ='"+name+"'";
+        if( email && imgData){
+        var flag = imgData.indexOf('png');
+        var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
+        var dataBuffer = new Buffer(base64Data, 'base64');
+        if(flag == 1){var text = "expostor"+Math.random()+".png"}else{text = "expostor"+Math.random()+".jpg"}
+            sql = "UPDATE gl_user SET email='"+email+"',time='"+time+"',headImage='"+text+"' WHERE username ='"+name+"'";
             //sql_params = [password,email,time];
             mysql.query(sql,function(err,result){
                 if(err){
                     console.log(err);
                 }else{
-                    res.status(200).send({msg:"success"});
+                    fs.writeFile("static/upload/"+text, dataBuffer, function(err) {
+                        if(err){
+                            return res.send(err);
+                        }else{
+                            return res.send("保存成功！");
+                        }
+                    }); 
                 }
             })
 
@@ -106,19 +133,32 @@ router.post('/user_modify',function(req,res){
 })
 
 router.post('/user_add',function(req,res){
+    var imgData = req.body.user_add_img;
     var name = req.body.user_add_username;
     var email = req.body.user_add_email;
     var password = common.md5(req.body.user_add_password+common.MD5_SUFFIX);
     console.log(password);
     var time = new Date().toLocaleString();
     if( name && password &&email){
-            sql = "INSERT INTO gl_user(id,username,password,email,time)VALUES(?,?,?,?,?)";
-            sql_params = [null,name,password,email,time];
+
+        var flag = imgData.indexOf('png');
+        var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
+        var dataBuffer = new Buffer(base64Data, 'base64');
+        if(flag == 1){var text = "expostor"+Math.random()+".png"}else{text = "expostor"+Math.random()+".jpg"}
+            sql = "INSERT INTO gl_user(id,username,password,email,headImage,time)VALUES(?,?,?,?,?,?)";
+            sql_params = [null,name,password,email,text,time];
             mysql.zsg(sql,sql_params,function(err,result){
                 if(err){
                     console.log(err);
                 }else{
-                    res.status(200).send({msg:"success"});
+                
+                    fs.writeFile("static/upload/"+text, dataBuffer, function(err) {
+                        if(err){
+                            return res.send(err);
+                        }else{
+                            return res.send("保存成功！");
+                        }
+                    }); 
                 }
             })
 
@@ -147,6 +187,22 @@ router.post('/user_del',function(req,res){
 })
 
 
+router.post('/beginUser',function(req,res){
+    var name = req.body.username;
+    sql = "SELECT * FROM gl_user WHERE username = '"+name+"'";
+    mysql.query(sql,function(err,userData){
+       if(err){
+            res.send({code:500,data:[],msg:'database error'});
+        }else if(userData.length == 0){ 
+            res.send({code:400,data:[],msg:'parameters error'});
+        }else{
+            res.send(JSON.stringify(userData));
+        } 
+
+
+    })
+
+})
 
 
 router.post('/expostor_add',function(req,res){
@@ -162,7 +218,6 @@ router.post('/expostor_add',function(req,res){
     if(name && sex && tel && lange && nbrang && wbrang && server && time){
         //过滤data:URL
         var flag = imgData.indexOf('png');
-        console.log(flag);
         var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
         var dataBuffer = new Buffer(base64Data, 'base64');
         if(flag == 1){var text = "expostor"+Math.random()+".png"}else{text = "expostor"+Math.random()+".jpg"}
@@ -192,6 +247,10 @@ router.post('/expostor_add',function(req,res){
 
 })
 
+    
+
+
+
 router.post('/expostor',function(req,res){
     sql = "SELECT * FROM expostor";
     mysql.query(sql,function(err,userData){
@@ -207,7 +266,7 @@ router.post('/expostor',function(req,res){
     })
 })    
 
-router.post('/expostor_modify',function(req,res){
+router.post('/expostor_modify_befor',function(req,res){
     name = req.body.username;
     sql = "SELECT * FROM expostor WHERE e_name = '"+name+"' ";
     mysql.query(sql,function(err,userData){
