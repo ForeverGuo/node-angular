@@ -27,10 +27,12 @@ app.expostor_add = function($scope,$http,$window,$location){
                 }).
                 success(function(data, status) {
                     //$scope.status = status;
-                    confirm("修改成功");
+                    console.log(data,status);
+                    confirm("添加成功");
+                    $location.url("/expostor");
                 }).
                 error(function(data, status) {
-                    confirm("修改失败");
+                    confirm("添加失败");
                 }); 
        }else{
             confirm("请把数据填写完全");

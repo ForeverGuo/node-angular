@@ -1,13 +1,12 @@
 const express = require('express');
 const mysql = require('dbConnect/mysql');
-const fs = require('fs');
+const fs = require('fsImage/imageData');
 const common = require('../../lib/common');
 var router = express.Router();
 router.post('/login',function(req,res){
    console.log(req.body.username);
    var username = req.body.username;
    var password = common.md5(req.body.password+common.MD5_SUFFIX);
-   console.log(password);
         if(username && password){
             mysql.query('SELECT * FROM gl_user WHERE username="'+username+'"',function (err,userData) {
                 if(err){
@@ -101,28 +100,19 @@ router.post('/user_modify_befor',function(req,res){
 })
 
 router.post('/user_modify',function(req,res){
-    var imgData = req.body.user_modify_img;
-    var name = req.body.user_modify_name;
-    var email = req.body.user_modify_email;
-    var time = new Date().toLocaleString();
-        if( email && imgData){
-        var flag = imgData.indexOf('png');
-        var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
-        var dataBuffer = new Buffer(base64Data, 'base64');
-        if(flag == 1){var text = "expostor"+Math.random()+".png"}else{text = "expostor"+Math.random()+".jpg"}
-            sql = "UPDATE gl_user SET email='"+email+"',time='"+time+"',headImage='"+text+"' WHERE username ='"+name+"'";
+    imgData = req.body.user_modify_img;
+    name = req.body.user_modify_name;
+    email = req.body.user_modify_email;
+    time = new Date().toLocaleString();
+    if(email && imgData){
+        var text = fs.add(imgData);    
+        sql = "UPDATE gl_user SET email='"+email+"',time='"+time+"',headImage='"+text+"' WHERE username ='"+name+"'";
             //sql_params = [password,email,time];
             mysql.query(sql,function(err,result){
                 if(err){
                     console.log(err);
                 }else{
-                    fs.writeFile("static/upload/"+text, dataBuffer, function(err) {
-                        if(err){
-                            return res.send(err);
-                        }else{
-                            return res.send("保存成功！");
-                        }
-                    }); 
+                    res.status(200).send({msg:"success"});
                 }
             })
 
@@ -133,32 +123,21 @@ router.post('/user_modify',function(req,res){
 })
 
 router.post('/user_add',function(req,res){
-    var imgData = req.body.user_add_img;
-    var name = req.body.user_add_username;
-    var email = req.body.user_add_email;
-    var password = common.md5(req.body.user_add_password+common.MD5_SUFFIX);
-    console.log(password);
-    var time = new Date().toLocaleString();
+     imgData = req.body.user_add_img;
+     name = req.body.user_add_username;
+     email = req.body.user_add_email;
+     password = common.md5(req.body.user_add_password+common.MD5_SUFFIX);
+     time = new Date().toLocaleString();
     if( name && password &&email){
 
-        var flag = imgData.indexOf('png');
-        var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
-        var dataBuffer = new Buffer(base64Data, 'base64');
-        if(flag == 1){var text = "expostor"+Math.random()+".png"}else{text = "expostor"+Math.random()+".jpg"}
+            var text = fs.add(imgData);
             sql = "INSERT INTO gl_user(id,username,password,email,headImage,time)VALUES(?,?,?,?,?,?)";
             sql_params = [null,name,password,email,text,time];
             mysql.zsg(sql,sql_params,function(err,result){
                 if(err){
                     console.log(err);
                 }else{
-                
-                    fs.writeFile("static/upload/"+text, dataBuffer, function(err) {
-                        if(err){
-                            return res.send(err);
-                        }else{
-                            return res.send("保存成功！");
-                        }
-                    }); 
+                    res.status(200).send({msg:"success"}); 
                 }
             })
 
@@ -169,8 +148,10 @@ router.post('/user_add',function(req,res){
 })
 
 router.post('/user_del',function(req,res){
-    var name = req.body.user_del_username;
-    if( name){
+    name = req.body.user_del_username;
+    imageSrc = req.body.user_del_img;
+    if(name && imageSrc){
+            fs.del(imageSrc);
             sql = "DELETE FROM gl_user WHERE username='"+name+"'";
             mysql.query(sql,function(err,result){
                 if(err){
@@ -217,10 +198,7 @@ router.post('/expostor_add',function(req,res){
     time = req.body.expostor_add_time;
     if(name && sex && tel && lange && nbrang && wbrang && server && time){
         //过滤data:URL
-        var flag = imgData.indexOf('png');
-        var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
-        var dataBuffer = new Buffer(base64Data, 'base64');
-        if(flag == 1){var text = "expostor"+Math.random()+".png"}else{text = "expostor"+Math.random()+".jpg"}
+        var  text = fs.add(imgData); 
         
         sql = "INSERT INTO expostor(id,e_name,e_sex,e_tel,e_language,en_range,ew_range,e_servers,e_time,e_photo)VALUES(?,?,?,?,?,?,?,?,?,?)";
         sql_params = [null,name,sex,tel,lange,nbrang,wbrang,server,time,text];
@@ -228,14 +206,7 @@ router.post('/expostor_add',function(req,res){
             if(err){
                 console.log(err);
             }else{
-            
-                fs.writeFile("static/upload/"+text, dataBuffer, function(err) {
-                     if(err){
-                        return res.send(err);
-                    }else{
-                        return res.send("保存成功！");
-                    }
-                }); 
+               res.status(200).send({msg:"success"});
             }
         
         })
@@ -246,10 +217,6 @@ router.post('/expostor_add',function(req,res){
    }
 
 })
-
-    
-
-
 
 router.post('/expostor',function(req,res){
     sql = "SELECT * FROM expostor";
@@ -281,6 +248,56 @@ router.post('/expostor_modify_befor',function(req,res){
 
     })
 })    
+
+router.post('/expostor_modify',function(req,res){
+    imgData = req.body.expostor_modify_img;
+    name = req.body.expostor_modify_name;
+    sex = req.body.expostor_modify_sex;
+    tel = req.body.expostor_modify_tel;
+    lange = req.body.expostor_modify_lange;
+    nbrang = req.body.expostor_modify_nbrang;
+    wbrang = req.body.expostor_modify_wbrang;
+    server = req.body.expostor_modify_server;
+    time = req.body.expostor_modify_time;
+    if(tel && imgData && lange && nbrang && wbrang && server && time){
+        var text = fs.add(imgData);    
+        sql = "UPDATE expostor SET e_tel='"+tel+"',e_language='"+lange+"',en_range='"+nbrang+"',ew_range='"+wbrang+"',e_servers='"+server+"',e_time='"+time+"',e_photo='"+text+"' WHERE e_name='"+name+"'";
+            //sql_params = [password,email,time];
+            mysql.query(sql,function(err,result){
+                if(err){
+                    console.log(err);
+                }else{
+                    res.status(200).send({msg:"success"});
+                }
+            })
+
+        }else{
+            res.status(404).send({msg:"参数不正确"});
+        }
+
+})
+
+
+router.post('/expostor_del',function(req,res){
+    name = req.body.expostor_del_username;
+    imageSrc = req.body.expostor_del_img;
+    if(name && imageSrc){
+            fs.del(imageSrc);
+            sql = "DELETE FROM expostor WHERE e_name='"+name+"'";
+            mysql.query(sql,function(err,result){
+                if(err){
+                    console.log(err);
+                }else{
+                    res.status(200).send({msg:"success"});
+                }
+            })
+
+        }else{
+            res.status(404).send({msg:"参数不正确"});
+    
+        }     
+})
+
 
 module.exports = router; 
 
