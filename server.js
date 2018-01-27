@@ -20,9 +20,12 @@ server.listen(8080);
 
 //解析请求数据
 
-server.use(bodyParser({
+/*server.use(bodyParser({
     extended:false
-}));
+}));*/
+server.use(bodyParser.json({limit: '50mb'}));
+server.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
 server.use(multerObj.any());
 
 //设置cookie，session
