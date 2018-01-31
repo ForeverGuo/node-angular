@@ -26,11 +26,11 @@
                            </div>
 			                <div class="form-group">
 				                <label>性别</label>
-                                <input class="form-control" type="text"  value={{user.e_sex}}  id="expostor_modify_sex" disabled  />
+                                <input class="form-control" type="text"  value={{user.sex}}  id="expostor_modify_sex" disabled  />
                             </div>
                            <div class="form-group">
                                  <label>联系方式</label>
-                                 <input class="form-control" type="number" value={{user.e_tel}}  id="expostor_modify_tel" />
+                                 <input class="form-control" type="number" value={{user.tel}}  id="expostor_modify_tel" />
                            </div>
                            
                            <div class="form-group">
@@ -62,7 +62,7 @@
                            </div>
                            <div class="form-group">
                                  <label>服务数量</label>
-                                 <input class="form-control" type="number" value={{user.e_servers}}  id="expostor_modify_servers" />
+                                 <input class="form-control" type="number" value={{user.server}}  id="expostor_modify_servers" />
                            </div>
                            <div class="form-group">
                                  <label>工作时段</label>
@@ -79,7 +79,7 @@
                                 <div class="">
                                     <div class="fileupload fileupload-new" data-provides="fileupload">
                                         <div class="fileupload-preview thumbnail" id="expostor_modify_img" style="width: 200px; height: 150px;">
-                                            <img ng-src="../upload/{{user.e_photo}}" />
+                                            <img ng-src="{{user.photo}}" />
                                         </div>
                                     <div>
                                     <span class="btn btn-file btn-success"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">改变图片</span><input type="file" id="expostor_file"  /></span>

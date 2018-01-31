@@ -36,9 +36,9 @@
                 <a class="navbar-brand" href="#/index">后台管理系统</a>
             </div>
 
-            <div class="header-right">
+            <div class="header-right" ng-repeat="user in beginUser">
 
-                <a href="javascript:;" class="btn btn-primary" title="用户名" id="username"></a>
+                <a href="javascript:;" class="btn btn-primary" title="用户名" id="username">{{user.name}}</a>
                 <a href="/admin" class="btn btn-danger" title="退出" id="logout" ng-click="logout()">退出</a>
 
             </div>
@@ -48,23 +48,32 @@
                 <ul class="nav" id="main-menu">
                     <li>
                         <div class="user-img-div" ng-repeat="user in beginUser">
-                            <img ng-src="../upload/{{user.headImage}}" class="img-thumbnail" />
+                            <img ng-src="{{user.photo}}" class="img-thumbnail" />
 
                             <div class="inner-text">
-                                {{user.username}}
+                                {{user.name}}
                             <br />
-                                <small>Last Login : {{user.time}} </small>
+                                <small>Type :{{type}} </small>
                             </div>
                         </div>
 
                     </li>
                     <li>
+                        <a  ng-click="setSelected('/home')" ng-class="{'active-menu':isSelected('/home')}" href="#/home"><i class="fa fa-desktop"></i>主页</a>
+                    </li>
+                    <li ng-hide="config">
                         <a  ng-click="setSelected('/config')" ng-class="{'active-menu':isSelected('/config')}" href="#/config"><i class="fa fa-dashboard "></i>系统配置</a>
                     </li>
-                    <li>
-                        <a  ng-click="setSelected('/user')" ng-class="{'active-menu':isSelected('/user')}" href="#/user"><i class="fa fa-user"></i>用户管理</a>
+                    <li ng-hide="user">
+                        <a ng-click="setSelected('/user')" ng-class="{'active-menu':isSelected('/user')}" href="#/user"><i class="fa fa-user"></i>管理组</a>
                     </li>
-                    <li>
+                    <li ng-hide="person">
+                        <a  ng-click="setSelected('/person')" ng-class="{'active-menu':isSelected('/person')}" href="#/person"><i class="fa fa-user"></i>个人资料</a>
+                    </li>
+                    <li ng-hide="password">
+                        <a  ng-click="setSelected('/password')" ng-class="{'active-menu':isSelected('/password')}" href="#/password"><i class="fa fa-lock"></i>修改密码</a>
+                    </li>
+                    <li ng-hide="expostor">
                         <a  ng-click="setSelected('/expostor')" ng-class="{'active-menu':isSelected('/expostor')}" href="#/expostor"><i class="fa fa-users"></i>讲解员列表</a>
                     </li>
                   </ul>
@@ -73,9 +82,5 @@
 </div>
 </body>
 <script>
-    $(document).ready(function () {
-        $("#username").html(window.localStorage.getItem("key"));
-
-    });
 </script>
 </html>

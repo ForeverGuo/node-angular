@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 26, 2018 at 02:40 PM
+-- Generation Time: Jan 31, 2018 at 05:42 PM
 -- Server version: 5.7.21-0ubuntu0.16.04.1
 -- PHP Version: 7.0.22-0ubuntu0.16.04.1
 
@@ -23,50 +23,54 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `expostor`
+-- Table structure for table `role`
 --
 
-CREATE TABLE `expostor` (
-  `id` int(11) NOT NULL COMMENT '--排序',
-  `e_name` varchar(32) NOT NULL COMMENT '--姓名',
-  `e_sex` varchar(32) NOT NULL COMMENT '--性别',
-  `e_tel` varchar(32) NOT NULL COMMENT '--联系方式',
-  `e_language` varchar(32) NOT NULL COMMENT '--语种',
-  `en_range` varchar(32) NOT NULL COMMENT '--内部级别',
-  `ew_range` varchar(32) NOT NULL COMMENT '--外部反馈',
-  `e_servers` varchar(32) NOT NULL COMMENT '--服务数量',
-  `e_time` varchar(32) NOT NULL COMMENT '--工作时段',
-  `e_photo` varchar(32) NOT NULL COMMENT '--证件照'
+CREATE TABLE `role` (
+  `id` int(10) NOT NULL COMMENT '--代号',
+  `desc` varchar(32) NOT NULL COMMENT '--描述',
+  `show_flag` varchar(32) NOT NULL COMMENT '--控制显示'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `expostor`
+-- Dumping data for table `role`
 --
 
-INSERT INTO `expostor` (`id`, `e_name`, `e_sex`, `e_tel`, `e_language`, `en_range`, `ew_range`, `e_servers`, `e_time`, `e_photo`) VALUES
-(1, 'gys', '男', '18626696269', '汉语', '一级', '一级', '10', '8:00-10:00', 'expostor0.6817698159720749.jpg');
+INSERT INTO `role` (`id`, `desc`, `show_flag`) VALUES
+(1, '管理员', 'true'),
+(2, '讲解员', 'false');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `gl_user`
+-- Table structure for table `user`
 --
 
-CREATE TABLE `gl_user` (
-  `id` int(11) NOT NULL,
-  `username` varchar(32) NOT NULL,
-  `password` varchar(32) NOT NULL,
-  `email` varchar(32) NOT NULL COMMENT '--用户邮箱',
-  `headImage` varchar(32) NOT NULL COMMENT '--用户头像',
-  `time` varchar(32) NOT NULL COMMENT '--录入时间'
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL COMMENT '--排序',
+  `name` varchar(32) NOT NULL COMMENT '--姓名',
+  `sex` varchar(32) NOT NULL COMMENT '--性别',
+  `tel` varchar(32) NOT NULL COMMENT '--联系方式',
+  `password` varchar(32) NOT NULL COMMENT '--密码',
+  `email` varchar(32) NOT NULL COMMENT '--邮箱',
+  `language` varchar(32) NOT NULL COMMENT '--语种',
+  `nrange` varchar(32) NOT NULL COMMENT '--内部评价',
+  `wrange` varchar(32) NOT NULL COMMENT '--外部评价',
+  `server` varchar(32) NOT NULL COMMENT '--服务数量',
+  `photo` varchar(64) NOT NULL COMMENT '--照片',
+  `role` varchar(32) NOT NULL COMMENT '--角色',
+  `time` varchar(32) NOT NULL COMMENT '--时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `gl_user`
+-- Dumping data for table `user`
 --
 
-INSERT INTO `gl_user` (`id`, `username`, `password`, `email`, `headImage`, `time`) VALUES
-(12, 'gys', 'd931c84bdd1d92cb60a64310ea548b8e', '3231935126@qq.com', 'expostor0.5844441761728376.jpg', '1/25/2018, 4:08:24 PM');
+INSERT INTO `user` (`id`, `name`, `sex`, `tel`, `password`, `email`, `language`, `nrange`, `wrange`, `server`, `photo`, `role`, `time`) VALUES
+(1, 'gys', '', '', 'd931c84bdd1d92cb60a64310ea548b8e', '', '', '', '', '', '../upload/expostor0.5844441761728376.jpg', '1', ''),
+(2, 'root', '', '', 'cecd14064502f3ab34cd5b0dee3545c2', '', '', '', '', '', '../upload/expostor0.7939665033482015.jpg', '1', ''),
+(3, '讲解员01', '男', '15682696269', 'd931c84bdd1d92cb60a64310ea548b8e', '123456@qq.com', '汉语', '一级', '一级', '7', '../upload/expostor0.5489711686968803.jpg', '2', '8:00-10:00'),
+(4, '讲解员02', '女', '147258369', 'd931c84bdd1d92cb60a64310ea548b8e', '123478@qq.com', '英语', '三级', '四级', '5', '../upload/expostor0.4210491362027824.jpg', '2', '10:00-12:00');
 
 -- --------------------------------------------------------
 
@@ -94,15 +98,9 @@ INSERT INTO `xi_config` (`xt_id`, `xt_name`, `xt_range`, `xt_color`, `xt_time`) 
 --
 
 --
--- Indexes for table `expostor`
+-- Indexes for table `user`
 --
-ALTER TABLE `expostor`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `gl_user`
---
-ALTER TABLE `gl_user`
+ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -116,15 +114,10 @@ ALTER TABLE `xi_config`
 --
 
 --
--- AUTO_INCREMENT for table `expostor`
+-- AUTO_INCREMENT for table `user`
 --
-ALTER TABLE `expostor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '--排序', AUTO_INCREMENT=8;
---
--- AUTO_INCREMENT for table `gl_user`
---
-ALTER TABLE `gl_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '--排序', AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `xi_config`
 --

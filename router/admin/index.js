@@ -8,7 +8,7 @@ router.post('/login',function(req,res){
    var username = req.body.username;
    var password = common.md5(req.body.password+common.MD5_SUFFIX);
         if(username && password){
-            mysql.query('SELECT * FROM gl_user WHERE username="'+username+'"',function (err,userData) {
+            mysql.query('SELECT * FROM user WHERE name="'+username+'" or email="'+username+'" or tel="'+username+'"',function (err,userData) {
                 if(err){
                     console.error(err);
                     res.status(500).send({code:500,data:[],msg:'database error'});
@@ -20,7 +20,7 @@ router.post('/login',function(req,res){
                     }else{
                         req.session['user_id'] = userData[0].id;//注意这里是在req上面
                         req.session['user_name'] =userData[0].username;
-                        res.status(200).send({code:200,data:[],msg:'success'});
+                        res.status(200).send({code:200,data:userData,msg:'success'});
                     }
                 }
             })
@@ -67,7 +67,7 @@ router.post('/config/content',function(req,res){
 
 
 router.post('/user',function(req,res){
-    sql = "SELECT * FROM gl_user";
+    sql = "SELECT * FROM user WHERE role = 1";
     mysql.query(sql,function(err,userData){
        if(err){
             res.send({code:500,data:[],msg:'database error'});
@@ -170,20 +170,41 @@ router.post('/user_del',function(req,res){
 
 router.post('/beginUser',function(req,res){
     var name = req.body.username;
-    sql = "SELECT * FROM gl_user WHERE username = '"+name+"'";
+    sql = "SELECT * FROM user WHERE name = '"+name+"' or email='"+name+"' or tel='"+name+"'";
     mysql.query(sql,function(err,userData){
        if(err){
             res.send({code:500,data:[],msg:'database error'});
         }else if(userData.length == 0){ 
             res.send({code:400,data:[],msg:'parameters error'});
         }else{
-            res.send(JSON.stringify(userData));
+               res.send(JSON.stringify(userData));
         } 
 
 
     })
 
 })
+
+router.post('/userType',function(req,res){
+    var role = req.body.type;
+    sql = "SELECT * FROM role WHERE id='"+role+"'";
+
+            mysql.query(sql,function(err,data){
+                if(err){
+                    res.send({code:500,data:[],msg:'database error'});
+                }else{
+                
+                    res.send(JSON.stringify(data));
+                }
+            
+            })
+
+
+})
+
+
+
+
 
 
 router.post('/expostor_add',function(req,res){
@@ -196,12 +217,15 @@ router.post('/expostor_add',function(req,res){
     wbrang = req.body.expostor_add_wbrang;
     server = req.body.expostor_add_server;
     time = req.body.expostor_add_time;
+    email = req.body.expostor_add_email;
+   password = common.md5("123456"+common.MD5_SUFFIX);
     if(name && sex && tel && lange && nbrang && wbrang && server && time){
         //过滤data:URL
-        var  text = fs.add(imgData); 
-        
-        sql = "INSERT INTO expostor(id,e_name,e_sex,e_tel,e_language,en_range,ew_range,e_servers,e_time,e_photo)VALUES(?,?,?,?,?,?,?,?,?,?)";
-        sql_params = [null,name,sex,tel,lange,nbrang,wbrang,server,time,text];
+        //console.log(imgData);
+        text = fs.add(imgData); 
+        //console.log(text);        
+        sql = "INSERT INTO user(id,name,sex,tel,password,email,language,nrange,wrange,server,photo,role,time)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        sql_params = [null,name,sex,tel,password,email,lange,nbrang,wbrang,server,text,'2',time];
         mysql.zsg(sql,sql_params,function(err,result){
             if(err){
                 console.log(err);
@@ -219,7 +243,7 @@ router.post('/expostor_add',function(req,res){
 })
 
 router.post('/expostor',function(req,res){
-    sql = "SELECT * FROM expostor";
+    sql = "SELECT * FROM user WHERE role = 2";
     mysql.query(sql,function(err,userData){
        if(err){
             res.status(500).send({code:500,data:[],msg:'database error'});
@@ -235,7 +259,7 @@ router.post('/expostor',function(req,res){
 
 router.post('/expostor_modify_befor',function(req,res){
     name = req.body.username;
-    sql = "SELECT * FROM expostor WHERE e_name = '"+name+"' ";
+    sql = "SELECT * FROM user WHERE name = '"+name+"' ";
     mysql.query(sql,function(err,userData){
        if(err){
             res.status(500).send({code:500,data:[],msg:'database error'});
@@ -261,7 +285,7 @@ router.post('/expostor_modify',function(req,res){
     time = req.body.expostor_modify_time;
     if(tel && imgData && lange && nbrang && wbrang && server && time){
         var text = fs.add(imgData);    
-        sql = "UPDATE expostor SET e_tel='"+tel+"',e_language='"+lange+"',en_range='"+nbrang+"',ew_range='"+wbrang+"',e_servers='"+server+"',e_time='"+time+"',e_photo='"+text+"' WHERE e_name='"+name+"'";
+        sql = "UPDATE user SET tel='"+tel+"',language='"+lange+"',nrange='"+nbrang+"',wrange='"+wbrang+"',server='"+server+"',time='"+time+"',photo='"+text+"' WHERE name='"+name+"'";
             //sql_params = [password,email,time];
             mysql.query(sql,function(err,result){
                 if(err){
@@ -282,7 +306,7 @@ router.post('/expostor_del',function(req,res){
     imageSrc = req.body.expostor_del_img;
     if(name && imageSrc){
             fs.del(imageSrc);
-            sql = "DELETE FROM expostor WHERE e_name='"+name+"'";
+            sql = "DELETE FROM user WHERE name='"+name+"'";
             mysql.query(sql,function(err,result){
                 if(err){
                     console.log(err);

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>系统配置</title>
+    <title></title>
     <script type="text/javascript:;" src="components/user.js"></script>
 </head>
 <body>  
@@ -11,7 +11,7 @@
     <div id="page-inner">
         <div class="row">
            <div class="col-md-12">
-            <h1 class="page-head-line">用户管理</h1>
+            <h1 class="page-head-line">管理组</h1>
            </div>     
         </div>  
          <div class="row">
@@ -23,27 +23,22 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th>管理员</th>
                                         <th>用户名</th>
-                                        <th>邮箱</th>
                                         <th>头像</th>
-                                        <th></th>
-                                        <th></th>
+                                        <th>权限</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="user in users" class="success">
                                         <td>{{user.id}}</td>
-                                        <td>{{user.username}}</td>
-                                        <td>{{user.email}}</td>
-                                        <td><img class="img-thumbnail" style="width:50px;height:50px;border-radious:50%;"  ng-src="../upload/{{user.headImage}}"></td>
-                                        <td><a href="#/user_modify?username={{user.username}}" class="btn btn-success">编辑</a></td>
-                                        <td><span ng-click="user_del(user.username,user.headImage)"  class="btn btn-danger">删除</span></td>
+                                        <td>{{user.name}}</td>
+                                        <td><img style="width:50px;height:50px;border-radious:50%;" class="img-thumbnail" ng-src="{{user.photo}}" /></td>
+                                        <td><span style="color:red;">所有权限</span></td>
                                     </tr>    
                                </tbody>         
                             </table>
                         </div>
-                       <p style="text-align:right;"><a href="#/user_add"  class="btn btn-success">增加</a></p>
                     </div>
                 </div>
             </div>

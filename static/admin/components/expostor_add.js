@@ -8,8 +8,9 @@ app.expostor_add = function($scope,$http,$window,$location){
          wbrang = $('#expostor_add_wbrang').val();
          server = $('#expostor_add_servers').val();
          time = $('#expostor_add_time').val();
+         email = $('#expostor_add_email').val();
          img = $('#expostor_add_img img').attr('src');
-         if(name && sex && tel && lange && nbrang && wbrang && server && time && img){
+         if(name && sex && tel && lange && nbrang && wbrang && server && time && img && email){
          $http({
                  method: "POST",
                  url: "/expostor_add",
@@ -22,7 +23,8 @@ app.expostor_add = function($scope,$http,$window,$location){
                         "expostor_add_wbrang":wbrang,
                         "expostor_add_server":server,
                         "expostor_add_time":time,
-                        "expostor_add_img":img
+                        "expostor_add_img":img,
+                        "expostor_add_email":email
                     }   
                 }).
                 success(function(data, status) {

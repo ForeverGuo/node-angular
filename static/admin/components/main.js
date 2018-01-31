@@ -29,15 +29,28 @@ var app=angular.module('myapp',['ng','ngRoute'])
   .when('/expostor_modify',{
       templateUrl:"template/expostor_modify.html",
       controller:"expostor_modify"
- }) 
+  }) 
+  .when('/person',{
+      templateUrl:"template/person.html",
+      controller:"person"
+  }) 
+  .when('/home',{
+      templateUrl:"template/home.html",
+      controller:"home"
+  }) 
+  .when('/password',{
+      templateUrl:"template/password.html",
+      controller:"password"
+  }) 
   .otherwise({
-     redirectTo : '/config'
+     redirectTo : '/home'
   })
 })
   .controller('mycontroller',function($scope,$http,$window,$location){
         pathUrl = $location.path();
-        beginUser($scope,$http,$window.localStorage.getItem("key"))
-        //console.log(pathUrl);
+        var user = $window.localStorage.getItem("key");
+        beginUser($scope,$http,user);
+
         if($window.localStorage.getItem("key")===null){
             $window.location = "/admin";
         }
@@ -78,8 +91,14 @@ var app=angular.module('myapp',['ng','ngRoute'])
  .controller('expostor_modify',function($window,$scope,$http,$location){
       app.expostor_modify($scope,$http,$window,$location);
 })
-
-
+ .controller('person',function($window,$scope,$http,$location){
+      app.person($scope,$http,$window,$location);
+})
+ .controller('home',function($window,$scope,$http,$location){
+})
+ .controller('password',function($window,$scope,$http,$location){
+      app.password($scope,$http,$window,$location);
+})
 
 function beginUser($scope,$http,name){
     $http({
@@ -89,7 +108,27 @@ function beginUser($scope,$http,name){
     }). 
     success(function(data,status){
         $scope.beginUser = data;
-        //console.log(data);
+        $scope.type_id = data[0].role;
+        if($scope.type_id == "1"){
+            $scope.person = true;
+            $scope.password = true;
+        }else{
+            $scope.user = true;
+            $scope.expostor = true;
+            $scope.config = true;
+        }
+        $http({
+            method:"POST",
+            url:"/userType",
+            data:{"type":data[0].role}
+        }).
+        success(function(data,status){
+           $scope.type = data[0].desc; 
+        }).
+        error(function(data,status){
+        
+        });
+
     }). 
     error(function(data,status){
     }); 

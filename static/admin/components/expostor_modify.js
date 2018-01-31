@@ -52,7 +52,6 @@ function expostor($scope,$http,name){
     }). 
     success(function(data,status){
         $scope.expostor = data;
-        //console.log(data);
     }). 
     error(function(data,status){
     }); 

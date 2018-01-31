@@ -12,7 +12,7 @@ const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const consolidate = require('consolidate');
 const ejs = require('ejs');
-
+const log4js = require('log_history/log');
 
 //创建服务器
 var server = express();
@@ -41,6 +41,15 @@ server.use(cookieParser('Neal_signed'));
         maxAge:300*60*1000 //设置用户过期时间
     }))
 })();
+
+//日志输出
+/*log4js.LogFile().trace('This is a Log4js-Test');  
+log4js.LogFile().debug('We Write Logs with log4js');  
+log4js.LogFile().info('You can find logs-files in the log-dir');  
+log4js.LogFile().warn('log-dir is a configuration-item in the log4js.json');  
+log4js.LogFile().error('In This Test log-dir is : \'./logs/log_test/\'');  
+*/
+
 var index = require('./router/admin/index');
 server.use('/',index);
 //设置模板
