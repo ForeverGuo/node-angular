@@ -4,7 +4,6 @@ const fs = require('fsImage/imageData');
 const common = require('../../lib/common');
 var router = express.Router();
 router.post('/login',function(req,res){
-   console.log(req.body.username);
    var username = req.body.username;
    var password = common.md5(req.body.password+common.MD5_SUFFIX);
         if(username && password){
@@ -214,18 +213,16 @@ router.post('/expostor_add',function(req,res){
     tel = req.body.expostor_add_tel;
     lange = req.body.expostor_add_lange;
     nbrang = req.body.expostor_add_nbrang;
-    wbrang = req.body.expostor_add_wbrang;
-    server = req.body.expostor_add_server;
     time = req.body.expostor_add_time;
     email = req.body.expostor_add_email;
-   password = common.md5("123456"+common.MD5_SUFFIX);
-    if(name && sex && tel && lange && nbrang && wbrang && server && time){
+   password = common.md5(req.body.expostor_add_password+common.MD5_SUFFIX);
+    if(name && sex && tel && lange && nbrang  && time){
         //过滤data:URL
         //console.log(imgData);
         text = fs.add(imgData); 
         //console.log(text);        
         sql = "INSERT INTO user(id,name,sex,tel,password,email,language,nrange,wrange,server,photo,role,time)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        sql_params = [null,name,sex,tel,password,email,lange,nbrang,wbrang,server,text,'2',time];
+        sql_params = [null,name,sex,tel,password,email,lange,nbrang,'0','0',text,'2',time];
         mysql.zsg(sql,sql_params,function(err,result){
             if(err){
                 console.log(err);
@@ -259,7 +256,7 @@ router.post('/expostor',function(req,res){
 
 router.post('/expostor_modify_befor',function(req,res){
     name = req.body.username;
-    sql = "SELECT * FROM user WHERE name = '"+name+"' ";
+    sql = "SELECT * FROM user WHERE id = '"+name+"' ";
     mysql.query(sql,function(err,userData){
        if(err){
             res.status(500).send({code:500,data:[],msg:'database error'});
@@ -320,6 +317,28 @@ router.post('/expostor_del',function(req,res){
     
         }     
 })
+
+router.post('/rpassword',function(req,res){
+    var old_pass = common.md5(req.body.old_pass+common.MD5_SUFFIX);
+    var new_pass = common.md5(req.body.new_pass+common.MD5_SUFFIX);
+    var name = req.body.name;
+    if(old_pass && new_pass && name){
+            sql = "UPDATE user SET password = '"+new_pass+"' WHERE name='"+name+"' or tel='"+name+"' or email='"+name+"' and password='"+old_pass+"'";
+            mysql.query(sql,function(err,result){
+                if(err){
+                    console.log(err);
+                }else{
+                    res.status(200).send({msg:"success"});
+                }
+            })
+
+        }else{
+            res.status(404).send({msg:"参数不正确"});
+    
+        }     
+})
+
+
 
 
 module.exports = router; 

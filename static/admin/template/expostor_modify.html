@@ -1,11 +1,32 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>讲解员修改</title>
     <script type="text/javascript:;" src="components/expostor_modify.js"></script>
 </head>
+<style>
+    .input_parent{
+        margin-top:15px;
+    }
+    .input_title{
+        width:80px;
+        text-align:right;
+    }
+    .input_content{
+        width: 233px;
+        border: 2px solid #ddd;
+        outline: none;
+        height: 40px;
+        margin-top: 10px;
+        border-radius: 5px;
+        text-indent: 10px;
+        margin-left: 15px; 
+    }
+
+
+</style>
 <body>  
 <div id="page-wrapper">
     <div id="page-inner">
@@ -20,29 +41,38 @@
                     <div class="panel-heading"></div>
                     <div class="panel-body">
                         <div  ng-repeat="user in expostor">
-                           <div class="form-group">
-                                 <label>姓名</label>
-                                 <input class="form-control" type="text"  value={{username}}  id="expostor_modify_name" disabled  />
+                           <div class="input_parent">
+                                 <label class="input_title">姓名 :</label>
+                                 <input class="input_content" type="text"  value={{user.name}}  id="expostor_modify_name"   />
                            </div>
-			                <div class="form-group">
-				                <label>性别</label>
-                                <input class="form-control" type="text"  value={{user.sex}}  id="expostor_modify_sex" disabled  />
+			                <div class="input_parent">
+				                <label class="input_title">性别 :</label>
+                                <input class="input_content" type="text"  value={{user.sex}}  id="expostor_modify_sex"   />
                             </div>
-                           <div class="form-group">
-                                 <label>联系方式</label>
-                                 <input class="form-control" type="number" value={{user.tel}}  id="expostor_modify_tel" />
+                           <div class="input_parent">
+                                 <label class="input_title">联系方式 :</label>
+                                 <input class="input_content" type="number" value={{user.tel}}  id="expostor_modify_tel" />
                            </div>
-                           
-                           <div class="form-group">
-                                 <label>语种</label>
-			                     <select class="form-control" id="expostor_modify_lange">
+                           <div class="input_parent">
+                                 <label class="input_title">邮箱 :</label>
+                                 <input class="input_content" type="email" value={{user.email}}  id="expostor_modify_email" />
+                           </div>
+                           <div class="input_parent">
+                                 <label class="input_title">密码 :</label>
+                                 <input class="input_content" type="password" value={{user.password}}  id="expostor_modify_password" />
+                           </div>
+                           <div class="input_parent">
+                                 <label class="input_title">语种 :</label>
+			                     <select class="input_content" id="expostor_modify_lange">
                                    <option value="汉语">汉语</option>
                                    <option value="英语">英语</option>
+                                   <option value="日语">日语</option>
+                                   <option value="韩语">韩语</option>
                                  </select>
                            </div>
-                           <div class="form-group">
-                                 <label>等级(内部规定)</label>
-			                     <select class="form-control" id="expostor_modify_nbrang">
+                           <div class="input_parent">
+                                 <label class="input_title">讲解员等级 :</label>
+			                     <select class="input_content" id="expostor_modify_nbrang">
                                    <option value="一级">一级</option>
                                    <option value="二级">二级</option>
                                    <option value="三级">三级</option>
@@ -50,35 +80,19 @@
                                    <option value="五级">五级</option>
                                  </select>
                            </div>
-                           <div class="form-group">
-                                 <label>等级(外部反馈)</label>
-			                     <select class="form-control" id="expostor_modify_wbrang">
-                                   <option value="一级">一级</option>
-                                   <option value="二级">二级</option>
-                                   <option value="三级">三级</option>
-                                   <option value="四级">四级</option>
-                                   <option value="五级">五级</option>
-                                 </select>
-                           </div>
-                           <div class="form-group">
-                                 <label>服务数量</label>
-                                 <input class="form-control" type="number" value={{user.server}}  id="expostor_modify_servers" />
-                           </div>
-                           <div class="form-group">
-                                 <label>工作时段</label>
-			                     <select class="form-control" id="expostor_modify_time">
+                           <div class="input_parent">
+                                 <label class="input_title">工作时段 :</label>
+			                     <select class="input_content" id="expostor_modify_time">
                                    <option value="8:00-10:00">8:00-10:00</option>
                                    <option value="10:00-12:00">10:00-12:00</option>
                                    <option value="14:00-16:00">14:00-16:00</option>
                                  </select>
                            </div>
-
-
-                           <div class="form-group">
-                                <label class="control-label col-lg-4">图片上传</label>
+                           <div class="input_parent">
+                                <label class="input_title">图片上传 :</label>
                                 <div class="">
-                                    <div class="fileupload fileupload-new" data-provides="fileupload">
-                                        <div class="fileupload-preview thumbnail" id="expostor_modify_img" style="width: 200px; height: 150px;">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload" style="">
+                                        <div class="fileupload-preview thumbnail" id="expostor_modify_img" style="width: 200px;margin-left:97px;line-height:none !important;">
                                             <img ng-src="{{user.photo}}" />
                                         </div>
                                     <div>
@@ -90,7 +104,7 @@
                         </div>    
                     </div>
 
-                     <span ng-click="expostor_modify()"  class="btn btn-info" id="expostor_modify_save">保存</span>
+                     <span ng-click="expostor_modify()"  class="btn btn-info" id="expostor_modify_save">提交</span>
                     </div>
                 </div>
             </div>  

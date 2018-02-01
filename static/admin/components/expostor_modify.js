@@ -51,6 +51,7 @@ function expostor($scope,$http,name){
         data:{"username":name}
     }). 
     success(function(data,status){
+        console.log(data);
         $scope.expostor = data;
     }). 
     error(function(data,status){

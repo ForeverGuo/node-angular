@@ -6,6 +6,30 @@
     <title>讲解员增加</title>
     <script type="text/javascript:;" src="components/expostor_add.js"></script>
 </head>
+<style>
+    .input_parent{
+        margin-top:15px;
+    }   
+    .input_title{
+        width:80px;
+        text-align:right;
+    }   
+    .input_content{
+        width: 233px;
+        border: 2px solid #ddd;
+        outline: none;
+        height: 40px;
+        margin-top: 10px;
+        border-radius: 5px;
+        text-indent: 10px;
+        margin-left: 15px; 
+    }
+    .checkP{
+        width: 227px;
+        margin: 5px 0 0px 102px;
+        color:red;
+    }
+</style>
 <body>  
 <div id="page-wrapper">
     <div id="page-inner">
@@ -20,80 +44,84 @@
                     <div class="panel-heading"></div>
                     <div class="panel-body">
                      <!--<form role="form" id="expostor_add_form">-->
-                           <div class="form-group">
-                                 <label>姓名</label>
-                                 <input class="form-control" type="text"   id="expostor_add_name"   />
+                           <div class="input_parent">
+                                 <label class="input_title">姓名 :</label>
+                                 <input class="input_content" type="text" ng-model="user" ng-blur="checkIsUser(user)"   id="expostor_add_name"   />
+                                 <span style="color:#00CA79;">(*支持姓名登录)</span>
                            </div>
-			                <div class="form-group">
-				                <label>性别</label>
-			                    <select class="form-control" id="expostor_add_sex">
+                           <p class="checkP" ng-hide="!user_flag">*请输入有效姓名！</p>
+			                <div class="input_parent">
+				                <label class="input_title">性别 :</label>
+			                    <select class="input_content" id="expostor_add_sex">
                                    <option value="男">男</option>
                                    <option value="女">女</option>
                                 </select>
+                                 <span style="color:#00CA79;">(*默认选项)</span>
                             </div>
-                           <div class="form-group">
-                                 <label>联系方式</label>
-                                 <input class="form-control" type="number"  id="expostor_add_tel" />
+                           <div class="input_parent">
+                                 <label class="input_title">手机号码 :</label>
+                                 <input class="input_content" ng-model="tel"  ng-blur="checkIsPhone(tel)"  type="tel"  id="expostor_add_tel" />
+                                 <span style="color:#00CA79;">(*支持手机号登录)</span>
                            </div>
-                           <div class="form-group">
-                                 <label>邮箱</label>
-                                 <input class="form-control" type="email"  id="expostor_add_email" />
+                           <p class="checkP" ng-hide="!tel_flag">*请输入有效号码！</p>
+                           <div class="input_parent">
+                                 <label class="input_title">邮箱 :</label>
+                                 <input class="input_content" ng-model="email" ng-blur="checkIsEmail(email)"  type="email"  id="expostor_add_email" />
+                                 <span style="color:#00CA79;">(*支持邮箱登录)</span>
                            </div>
-                           <div class="form-group">
-                                 <label>语种</label>
-			                     <select class="form-control" id="expostor_add_lange">
+                           <p class="checkP" ng-hide="!email_flag">*请输入有效邮箱！</p>
+                           <div class="input_parent">
+                                 <label class="input_title">密码 :</label>
+                                 <input class="input_content" type="password" placeholder="123456" value="123456"  id="expostor_add_password" />
+                                 <span style="color:#00CA79;">(*默认已设置，可自行修改)</span>
+                           </div>
+                           <div class="input_parent">
+                                 <label class="input_title">语种 :</label>
+			                     <select class="input_content" id="expostor_add_lange">
                                    <option value="汉语">汉语</option>
                                    <option value="英语">英语</option>
+                                   <option value="日语">日语</option>
+                                   <option value="韩语">韩语</option>
                                  </select>
+                                 <span style="color:#00CA79;">(*默认选项)</span>
                            </div>
-                           <div class="form-group">
-                                 <label>等级(内部规定)</label>
-			                     <select class="form-control" id="expostor_add_nbrang">
+                           <div class="input_parent">
+                                 <label class="input_title">讲解员等级 :</label>
+			                     <select class="input_content" id="expostor_add_nbrang">
                                    <option value="一级">一级</option>
                                    <option value="二级">二级</option>
                                    <option value="三级">三级</option>
                                    <option value="四级">四级</option>
                                    <option value="五级">五级</option>
                                  </select>
+                                 <span style="color:#00CA79;">(*默认选项)</span>
                            </div>
-                           <div class="form-group">
-                                 <label>等级(外部反馈)</label>
-			                     <select class="form-control" id="expostor_add_wbrang">
-                                   <option value="一级">一级</option>
-                                   <option value="二级">二级</option>
-                                   <option value="三级">三级</option>
-                                   <option value="四级">四级</option>
-                                   <option value="五级">五级</option>
-                                 </select>
-                           </div>
-                           <div class="form-group">
-                                 <label>服务数量</label>
-                                 <input class="form-control" type="number"  id="expostor_add_servers" />
-                           </div>
-                           <div class="form-group">
-                                 <label>工作时段</label>
-			                     <select class="form-control" id="expostor_add_time">
+                           <div class="input_parent">
+                                 <label class="input_title">工作时段 :</label>
+			                     <select class="input_content" id="expostor_add_time">
                                    <option value="8:00-10:00">8:00-10:00</option>
                                    <option value="10:00-12:00">10:00-12:00</option>
                                    <option value="14:00-16:00">14:00-16:00</option>
                                  </select>
+                                 <span style="color:#00CA79;">(*默认选项)</span>
                            </div>
 
 
-                           <div class="form-group">
-                                <label class="control-label col-lg-4">图片上传</label>
+                           <div class="input_parent">
+                                <label class="input_title">图片上传</label>
                                 <div class="">
                                     <div class="fileupload fileupload-new" data-provides="fileupload">
-                                        <div class="fileupload-preview thumbnail" id="expostor_add_img" style="width: 200px; height: 150px;"></div>
+                                        <div class="fileupload-preview thumbnail" id="expostor_add_img" style="width: 200px;height:200px;margin-left:97px;line-height:none !important;"></div>
                                     <div>
                                     <span class="btn btn-file btn-success"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">改变图片</span><input type="file" id="expostor_file"  /></span>
                                         <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload">取消图片</a>
                                     </div>
                                  </div>
                             </div>
+                           <p class="checkP" ng-hide="!image_flag">*请上传本人头像！</p>
                     </div>
 
-                     <span ng-click="expostor_add()"  class="btn btn-info" id="expostor_add_save">保存</span>
+                     <span ng-click="expostor_add()"  class="btn btn-info" id="expostor_add_save">提交</span>
                     </div>
                 </div>
             </div>  
@@ -104,4 +132,8 @@
 <!--page-wrapper-->       
 </div>
 </body>
+<script>
+
+</script>
+
 </html>
