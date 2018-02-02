@@ -6,6 +6,7 @@ var router = express.Router();
 router.post('/login',function(req,res){
    var username = req.body.username;
    var password = common.md5(req.body.password+common.MD5_SUFFIX);
+   console.log(typeof(req.body.password));
         if(username && password){
             mysql.query('SELECT * FROM user WHERE name="'+username+'" or email="'+username+'" or tel="'+username+'"',function (err,userData) {
                 if(err){
@@ -271,18 +272,19 @@ router.post('/expostor_modify_befor',function(req,res){
 })    
 
 router.post('/expostor_modify',function(req,res){
+    id = req.body.expostor_modify_id;
     imgData = req.body.expostor_modify_img;
     name = req.body.expostor_modify_name;
     sex = req.body.expostor_modify_sex;
     tel = req.body.expostor_modify_tel;
+    email = req.body.expostor_modify_email;
+    password = common.md5(req.body.expostor_modify_password+common.MD5_SUFFIX);
     lange = req.body.expostor_modify_lange;
     nbrang = req.body.expostor_modify_nbrang;
-    wbrang = req.body.expostor_modify_wbrang;
-    server = req.body.expostor_modify_server;
     time = req.body.expostor_modify_time;
-    if(tel && imgData && lange && nbrang && wbrang && server && time){
+    if(name && sex && tel && email &&password && lange && nbrang && imgData && time){
         var text = fs.add(imgData);    
-        sql = "UPDATE user SET tel='"+tel+"',language='"+lange+"',nrange='"+nbrang+"',wrange='"+wbrang+"',server='"+server+"',time='"+time+"',photo='"+text+"' WHERE name='"+name+"'";
+        sql = "UPDATE user SET name='"+name+"',email='"+email+"',sex='"+sex+"',tel='"+tel+"',password='"+password+"',language='"+lange+"',nrange='"+nbrang+"',time='"+time+"',photo='"+text+"' WHERE id='"+id+"'";
             //sql_params = [password,email,time];
             mysql.query(sql,function(err,result){
                 if(err){
@@ -299,11 +301,11 @@ router.post('/expostor_modify',function(req,res){
 })
 
 router.post('/expostor_del',function(req,res){
-    name = req.body.expostor_del_username;
+    id = req.body.expostor_del_id;
     imageSrc = req.body.expostor_del_img;
-    if(name && imageSrc){
+    if(id && imageSrc){
             fs.del(imageSrc);
-            sql = "DELETE FROM user WHERE name='"+name+"'";
+            sql = "DELETE FROM user WHERE id ='"+id+"'";
             mysql.query(sql,function(err,result){
                 if(err){
                     console.log(err);

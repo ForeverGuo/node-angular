@@ -48,7 +48,7 @@
                                         <td>{{user.time}}</td>
                                         <td><img style="width:50px;height:50px;border-radious:50%;" class="img-thumbnail" ng-src="../upload/{{user.photo}}" /></td>
                                         <td><a href="#/expostor_modify?username={{user.id}}"  class="btn btn-success">修改</a></td>
-                                        <td><span ng-click="expostor_del(user.name,user.photo)"  class="btn btn-danger" >删除</span></td>
+                                        <td><span ng-click="expostor_del(user.id,user.photo)"  class="btn btn-danger" >删除</span></td>
                                     </tr>    
                                </tbody>         
                             </table>
