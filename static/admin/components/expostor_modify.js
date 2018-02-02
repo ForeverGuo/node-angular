@@ -1,5 +1,4 @@
 app.expostor_modify = function($scope,$http,$window,$location){
-    $scope.default_pass = "123456";
     $scope.username = $location.search().username;
     expostor($scope,$http,$scope.username);
     $scope.expostor_modify = function(){
@@ -12,7 +11,7 @@ app.expostor_modify = function($scope,$http,$window,$location){
          img = $('#expostor_modify_img img').attr('src');
          email = $('#expostor_modify_email').val();
          password = $('#expostor_modify_password').val();
-         if(name && sex && tel && lange && nbrang  && email && time && img && password){
+         if(name && sex && tel && lange && nbrang  && email && time && img){
          $http({
                  method: "POST",
                  url: "/expostor_modify",

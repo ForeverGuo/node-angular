@@ -13,7 +13,7 @@ app.expostor_add = function($scope,$http,$window,$location){
          img = $('#expostor_add_img img').attr('src');
          password = $('#expostor_add_password').val();
          if(!checkIsImage($scope,img)){return;}
-         if(name && sex && tel && lange && nbrang && time && img && email && password){
+         if(name && sex && tel && lange && nbrang && time && img && email){
             $http({
                  method: "POST",
                  url: "/expostor_add",

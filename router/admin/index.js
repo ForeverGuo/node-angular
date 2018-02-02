@@ -6,7 +6,6 @@ var router = express.Router();
 router.post('/login',function(req,res){
    var username = req.body.username;
    var password = common.md5(req.body.password+common.MD5_SUFFIX);
-   console.log(typeof(req.body.password));
         if(username && password){
             mysql.query('SELECT * FROM user WHERE name="'+username+'" or email="'+username+'" or tel="'+username+'"',function (err,userData) {
                 if(err){
@@ -216,8 +215,14 @@ router.post('/expostor_add',function(req,res){
     nbrang = req.body.expostor_add_nbrang;
     time = req.body.expostor_add_time;
     email = req.body.expostor_add_email;
-   password = common.md5(req.body.expostor_add_password+common.MD5_SUFFIX);
-    if(name && sex && tel && lange && nbrang  && time){
+    if(req.body.expostor_add_password == ''){
+        
+        password = common.md5('123456'+common.MD5_SUFFIX);
+    }else{
+        
+        password = common.md5(req.body.expostor_add_password+common.MD5_SUFFIX);
+    }
+    if(name && sex && tel && lange && nbrang  && time && email){
         //过滤data:URL
         //console.log(imgData);
         text = fs.add(imgData); 
@@ -278,13 +283,20 @@ router.post('/expostor_modify',function(req,res){
     sex = req.body.expostor_modify_sex;
     tel = req.body.expostor_modify_tel;
     email = req.body.expostor_modify_email;
-    password = common.md5(req.body.expostor_modify_password+common.MD5_SUFFIX);
     lange = req.body.expostor_modify_lange;
     nbrang = req.body.expostor_modify_nbrang;
     time = req.body.expostor_modify_time;
-    if(name && sex && tel && email &&password && lange && nbrang && imgData && time){
+
+    if(name && sex && tel && email  && lange && nbrang && imgData && time){
         var text = fs.add(imgData);    
-        sql = "UPDATE user SET name='"+name+"',email='"+email+"',sex='"+sex+"',tel='"+tel+"',password='"+password+"',language='"+lange+"',nrange='"+nbrang+"',time='"+time+"',photo='"+text+"' WHERE id='"+id+"'";
+        if(req.body.expostor_modify_password == ''){
+        
+            sql = "UPDATE user SET name='"+name+"',email='"+email+"',sex='"+sex+"',tel='"+tel+"',language='"+lange+"',nrange='"+nbrang+"',time='"+time+"',photo='"+text+"' WHERE id='"+id+"'";
+        }else{
+            
+            password = common.md5(req.body.expostor_modify_password+common.MD5_SUFFIX);
+            sql = "UPDATE user SET name='"+name+"',email='"+email+"',sex='"+sex+"',tel='"+tel+"',password='"+password+"',language='"+lange+"',nrange='"+nbrang+"',time='"+time+"',photo='"+text+"' WHERE id='"+id+"'";
+        }
             //sql_params = [password,email,time];
             mysql.query(sql,function(err,result){
                 if(err){
