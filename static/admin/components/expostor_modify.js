@@ -11,7 +11,8 @@ app.expostor_modify = function($scope,$http,$window,$location){
          img = $('#expostor_modify_img img').attr('src');
          email = $('#expostor_modify_email').val();
          password = $('#expostor_modify_password').val();
-         if(name && sex && tel && lange && nbrang  && email && time && img){
+         video = $('#expostor_modify_video audio').attr('src');
+         if(name && sex && tel && lange && nbrang  && email && time && img && video){
          $http({
                  method: "POST",
                  url: "/expostor_modify",
@@ -25,7 +26,8 @@ app.expostor_modify = function($scope,$http,$window,$location){
                         "expostor_modify_lange":lange,
                         "expostor_modify_nbrang":nbrang,
                         "expostor_modify_time":time,
-                        "expostor_modify_img":img
+                        "expostor_modify_img":img,
+                        "expostor_modify_video":video
                     }
                 }).
                 success(function(data, status) {
@@ -52,7 +54,6 @@ function expostor($scope,$http,name){
         data:{"username":name}
     }). 
     success(function(data,status){
-        console.log(data);
         $scope.expostor = data;
     }). 
     error(function(data,status){

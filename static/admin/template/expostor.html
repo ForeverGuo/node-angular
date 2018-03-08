@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -28,6 +28,7 @@
                                         <th>手机号</th>
                                         <th>邮箱</th>
                                         <th>语种</th>
+                                        <th>试音</th>
                                         <th>讲解员等级</th>
                                         <th>评价</th>
                                         <th>服务数量</th>
@@ -42,13 +43,16 @@
                                         <td>{{user.tel}}</td>
                                         <td>{{user.email}}</td>
                                         <td>{{user.language}}</td>
+                                        <td>
+                                            <img ng-src={{imgSrc}} style='width:35px;' id={{user.id}}  ng-click="music(user.video,$event)" />
+                                         </td>
                                         <td>{{user.nrange}}</td>
                                         <td>{{user.wrange}}</td>
                                         <td>{{user.server}}</td>
                                         <td>{{user.time}}</td>
-                                        <td><img style="width:50px;height:50px;border-radious:50%;" class="img-thumbnail" ng-src="../upload/{{user.photo}}" /></td>
+                                        <td><img style="width:50px;height:50px;border-radious:50%;" class="img-thumbnail" ng-src="{{user.photo}}" /></td>
                                         <td><a href="#/expostor_modify?username={{user.id}}"  class="btn btn-success">修改</a></td>
-                                        <td><span ng-click="expostor_del(user.id,user.photo)"  class="btn btn-danger" >删除</span></td>
+                                        <td><span ng-click="expostor_del(user.id,user.photo,user.video)"  class="btn btn-danger" >删除</span></td>
                                     </tr>    
                                </tbody>         
                             </table>
@@ -62,6 +66,7 @@
        <!--page-inner-->    
        </div>
 <!--page-wrapper-->       
+<audio controls="controls" src='' id="audioId" style='display:none;'></audio>
 </div>
 </body>
 </html>

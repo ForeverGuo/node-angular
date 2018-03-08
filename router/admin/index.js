@@ -202,10 +202,6 @@ router.post('/userType',function(req,res){
 })
 
 
-
-
-
-
 router.post('/expostor_add',function(req,res){
     imgData = req.body.expostor_add_img;
     name = req.body.expostor_add_name;
@@ -215,6 +211,11 @@ router.post('/expostor_add',function(req,res){
     nbrang = req.body.expostor_add_nbrang;
     time = req.body.expostor_add_time;
     email = req.body.expostor_add_email;
+    video = req.body.expostor_add_video;
+
+    console.log(video);
+
+
     if(req.body.expostor_add_password == ''){
         
         password = common.md5('123456'+common.MD5_SUFFIX);
@@ -224,14 +225,15 @@ router.post('/expostor_add',function(req,res){
     }
     if(name && sex && tel && lange && nbrang  && time && email){
         //过滤data:URL
-        //console.log(imgData);
-        text = fs.add(imgData); 
+        text = fs.add(imgData);
+        videoText = fs.addVideo(video);
         //console.log(text);        
-        sql = "INSERT INTO user(id,name,sex,tel,password,email,language,nrange,wrange,server,photo,role,time)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        sql_params = [null,name,sex,tel,password,email,lange,nbrang,'0','0',text,'2',time];
+        sql = "INSERT INTO user(id,name,sex,tel,password,email,language,video,nrange,wrange,server,photo,role,time)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        sql_params = [null,name,sex,tel,password,email,lange,videoText,nbrang,'0','0',text,'2',time];
         mysql.zsg(sql,sql_params,function(err,result){
             if(err){
-                console.log(err);
+                console.log('error'+err);
+                fs.del(text);
             }else{
                res.status(200).send({msg:"success"});
             }
@@ -239,7 +241,8 @@ router.post('/expostor_add',function(req,res){
         })
 
    }else{
-   
+        console.log('error01');
+        fs.del(text); 
         res.status(404).send({msg:"参数不正确"});
    }
 
@@ -286,16 +289,19 @@ router.post('/expostor_modify',function(req,res){
     lange = req.body.expostor_modify_lange;
     nbrang = req.body.expostor_modify_nbrang;
     time = req.body.expostor_modify_time;
+    video = req.body.expostor_modify_video;
 
     if(name && sex && tel && email  && lange && nbrang && imgData && time){
         var text = fs.add(imgData);    
+        var videoText = fs.addVideo(video);
+
         if(req.body.expostor_modify_password == ''){
         
-            sql = "UPDATE user SET name='"+name+"',email='"+email+"',sex='"+sex+"',tel='"+tel+"',language='"+lange+"',nrange='"+nbrang+"',time='"+time+"',photo='"+text+"' WHERE id='"+id+"'";
+            sql = "UPDATE user SET name='"+name+"',email='"+email+"',sex='"+sex+"',tel='"+tel+"',language='"+lange+"',video='"+videoText+"',nrange='"+nbrang+"',time='"+time+"',photo='"+text+"' WHERE id='"+id+"'";
         }else{
             
             password = common.md5(req.body.expostor_modify_password+common.MD5_SUFFIX);
-            sql = "UPDATE user SET name='"+name+"',email='"+email+"',sex='"+sex+"',tel='"+tel+"',password='"+password+"',language='"+lange+"',nrange='"+nbrang+"',time='"+time+"',photo='"+text+"' WHERE id='"+id+"'";
+            sql = "UPDATE user SET name='"+name+"',email='"+email+"',sex='"+sex+"',tel='"+tel+"',password='"+password+"',language='"+lange+"',video='"+videoText+"',nrange='"+nbrang+"',time='"+time+"',photo='"+text+"' WHERE id='"+id+"'";
         }
             //sql_params = [password,email,time];
             mysql.query(sql,function(err,result){
@@ -315,8 +321,10 @@ router.post('/expostor_modify',function(req,res){
 router.post('/expostor_del',function(req,res){
     id = req.body.expostor_del_id;
     imageSrc = req.body.expostor_del_img;
+    videoSrc = req.body.expostor_del_video;
     if(id && imageSrc){
             fs.del(imageSrc);
+            fs.delVideo(videoSrc);
             sql = "DELETE FROM user WHERE id ='"+id+"'";
             mysql.query(sql,function(err,result){
                 if(err){
@@ -351,6 +359,34 @@ router.post('/rpassword',function(req,res){
     
         }     
 })
+router.post('/vistor',function(req,res){
+    sql = "SELECT * FROM vistor";
+    mysql.query(sql,function(err,userData){
+       if(err){
+            res.status(500).send({code:500,data:[],msg:'database error'});
+        }else if(userData.length == 0){ 
+            res.status(400).send({code:400,data:[],msg:'parameters error'});
+        }else{
+            res.send(JSON.stringify(userData));
+        } 
+
+
+    })
+})    
+router.post('/time',function(req,res){
+    sql = "SELECT * FROM time";
+    mysql.query(sql,function(err,userData){
+       if(err){
+            res.status(500).send({code:500,data:[],msg:'database error'});
+        }else if(userData.length == 0){ 
+            res.status(400).send({code:400,data:[],msg:'parameters error'});
+        }else{
+            res.send(JSON.stringify(userData));
+        } 
+
+
+    })
+})    
 
 
 

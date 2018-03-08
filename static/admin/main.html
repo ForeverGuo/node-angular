@@ -23,6 +23,12 @@
   <!--CUSTOM MAIN STYLES-->
   <link href="assets/css/custom.css" rel="stylesheet" />
 </head>
+<style>
+    .panel-info > .panel-heading{display:none;}
+    .panel-info{border:none;}
+    .page-head-line{border-bottom: 2px dashed #00CA79;}
+    .navbar-cls-top { background: #f3f3f3;}
+</style>
 <body ng-controller="mycontroller">
   <div id="wrapper">
     <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
@@ -76,9 +82,22 @@
                     <li ng-hide="expostor">
                         <a  ng-click="setSelected('/expostor')" ng-class="{'active-menu':isSelected('/expostor')}" href="#/expostor"><i class="fa fa-users"></i>讲解员列表</a>
                     </li>
+                    <li ng-hide="vistor">
+                        <a  ng-click="setSelected('/vistor')" ng-class="{'active-menu':isSelected('/vistor')}" href="#/vistor"><i class="fa fa-file-text-o"></i>游客列表</a>
+                    </li>
+                    <li ng-hide="time">
+                        <a  ng-click="setSelected('/time')" ng-class="{'active-menu':isSelected('/time')}" href="#/time"><i class="fa fa-pie-chart"></i>时间记录表</a>
+                    </li>
+                    <li ng-hide="customer_order">
+                        <a  ng-click="setSelected('/customer_order')" ng-class="{'active-menu':isSelected('/customer_order')}" href="#/customer_order"><i class="fa fa-copy"></i>客户预约表</a>
+                    </li>
+                    <li ng-hide="expostor_order">
+                        <a  ng-click="setSelected('/expostor_order')" ng-class="{'active-menu':isSelected('/expostor_order')}" href="#/expostor_order"><i class="fa fa-file"></i>讲解员预约表</a>
+                    </li>
                   </ul>
-             </nav>     
-             <div ng-view></div>
+            </div>
+       </nav>     
+       <div ng-view></div>
 </div>
 </body>
 <script>

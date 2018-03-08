@@ -42,6 +42,22 @@ var app=angular.module('myapp',['ng','ngRoute'])
       templateUrl:"template/password.html",
       controller:"password"
   }) 
+  .when('/vistor',{
+      templateUrl:"template/vistor.html",
+      controller:"vistor"
+  }) 
+  .when('/time',{
+      templateUrl:"template/time.html",
+      controller:"time"
+  }) 
+  .when('/customer_order',{
+      templateUrl:"template/customer_order.html",
+      controller:"customer_order"
+  }) 
+  .when('/expostor_order',{
+      templateUrl:"template/expostor_order.html",
+      controller:"expostor_order"
+  }) 
   .otherwise({
      redirectTo : '/home'
   })
@@ -98,6 +114,18 @@ var app=angular.module('myapp',['ng','ngRoute'])
 })
  .controller('password',function($window,$scope,$http,$location){
       app.password($scope,$http,$window,$location);
+})
+ .controller('vistor',function($window,$scope,$http,$location){
+      app.vistor($scope,$http,$window,$location);
+})
+ .controller('time',function($window,$scope,$http,$location){
+      app.time($scope,$http,$window,$location);
+})
+ .controller('customer_order',function($window,$scope,$http,$location){
+      app.customer_order($scope,$http,$window,$location);
+})
+ .controller('expostor_order',function($window,$scope,$http,$location){
+      app.expostor_order($scope,$http,$window,$location);
 })
 
 function beginUser($scope,$http,name){

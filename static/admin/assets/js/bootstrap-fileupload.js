@@ -89,10 +89,21 @@
         }
 
         reader.readAsDataURL(file)
-      } else {
+        }else{
+        var reader = new FileReader()
+        var preview = this.$preview
+        var element = this.$element
+
+        reader.onload = function(e) {
+          preview.html('<audio controls="controls"  src="' + e.target.result + '" ' + (preview.css('max-height') != 'none' ? 'style="max-height: ' + preview.css('max-height') + ';"' : '') + ' />')
+          element.addClass('fileupload-exists').removeClass('fileupload-new')
+        }
+        
+        reader.readAsDataURL(file)
         this.$preview.text(file.name)
         this.$element.addClass('fileupload-exists').removeClass('fileupload-new')
-      }
+      }  
+      
     },
 
     clear: function(e) {

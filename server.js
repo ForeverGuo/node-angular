@@ -16,7 +16,7 @@ const log4js = require('log_history/log');
 
 //创建服务器
 var server = express();
-server.listen(8080);
+server.listen(8000);
 
 //解析请求数据
 

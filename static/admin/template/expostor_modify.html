@@ -36,7 +36,7 @@
            </div>     
         </div>  
          <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+            <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="panel panel-info">
                     <div class="panel-heading"></div>
                     <div class="panel-body">
@@ -70,6 +70,21 @@
                                    <option value="韩语">韩语</option>
                                  </select>
                            </div>
+                            <div class="input_parent">
+                                <label class="input_title">音频上传</label>
+                                <div class="">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="fileupload-preview thumbnail" id="expostor_modify_video" style="width:306px;height:39px;margin-left:97px;line-height:none !important;">
+                                            <audio ng-src="{{user.video}}" controls="controls"></audio>
+                                        </div>
+                                    <div>
+                                    <span class="btn btn-file btn-success"><span class="fileupload-new">选择音频</span><span class="fileupload-exists">改变音频</span><input type="file" id="expostor_file"  /></span>
+                                        <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload">取消音频</a>
+                                    </div>
+                                 </div>
+                            </div>
+                           </div>
+ 
                            <div class="input_parent">
                                  <label class="input_title">讲解员等级 :</label>
 			                     <select class="input_content" id="expostor_modify_nbrang">

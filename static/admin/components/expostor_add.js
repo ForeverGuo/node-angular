@@ -13,6 +13,8 @@ app.expostor_add = function($scope,$http,$window,$location){
          img = $('#expostor_add_img img').attr('src');
          password = $('#expostor_add_password').val();
          if(!checkIsImage($scope,img)){return;}
+         video = $('#expostor_add_video audio').attr('src');
+         if(!checkIsVideo($scope,video)){return;}
          if(name && sex && tel && lange && nbrang && time && img && email){
             $http({
                  method: "POST",
@@ -26,7 +28,8 @@ app.expostor_add = function($scope,$http,$window,$location){
                         "expostor_add_time":time,
                         "expostor_add_img":img,
                         "expostor_add_email":email,
-                        "expostor_add_password":password
+                        "expostor_add_password":password,
+                        "expostor_add_video":video
                     }   
                 }).
                 success(function(data, status) {
@@ -82,8 +85,8 @@ app.expostor_add = function($scope,$http,$window,$location){
             return true;
        } 
   }
-
 }
+
 function checkIsImage($scope,str){
     if(!str){
         $scope.image_flag = true;
@@ -92,6 +95,15 @@ function checkIsImage($scope,str){
         $scope.image_flag = false;
         return true;
     }
-}
+ }
 
+function checkIsVideo($scope,str){
+    if(!str){
+        $scope.video_flag = true;
+        return false;
+    }else{  
+        $scope.video_flag = false;
+        return true;
+    }
+ }
 
